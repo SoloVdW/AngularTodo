@@ -1,0 +1,146 @@
+﻿$primary-color: #5992C3;
+$secleted-color: #90c1eb;
+$done-color: #2d8306;
+$secleted-done-color: #36a305;
+$archived-color: #9c9595;
+$archived-selected-color: gray;
+$heading-text-color: #FFF;
+
+body {
+    margin: 15px;
+}
+
+
+.username {
+    float: right;
+}
+
+.btn-primary {
+    color: #FFF;
+    background-color: $primary-color;
+    border-color: $primary-color;
+}
+
+.todoList {
+    width: 800px;
+
+    .input-group {
+        padding-bottom: 8px;
+    }
+
+    .grid-panel {
+        margin-bottom: 10px;
+        background-color: $heading-text-color;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
+
+        .grid-panel-heading {
+            color: $heading-text-color;
+            padding: 5px 7px;
+            border-bottom: 1px solid transparent;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+        }
+
+        .todoAction {
+            float: right;
+            color: inherit;
+            padding-left: 5px;
+        }
+
+        .view {
+            .grid-panel-title {
+                font-size: 16px;
+                color: inherit;
+            }
+        }
+
+        .edit {
+            .grid-panel-title {
+                font-size: 16px;
+                width: 80%;
+                color: inherit;
+                background-color: rgba(144, 193, 235, 0.00);
+                border-bottom: 1px solid transparent;
+                border-top: 1px solid transparent;
+                border-left: 1px solid transparent;
+                border-right: 1px solid transparent;
+            }
+
+            .description {
+                .input {
+                    width: 100%;
+                }
+            }
+        }
+
+        &.incomplete {
+            border-color: $primary-color;
+
+            .grid-panel-heading {
+                background-color: $primary-color;
+            }
+        }
+
+        &.complete {
+            border-color: $done-color;
+
+            .grid-panel-heading {
+                background-color: $done-color;
+            }
+        }
+
+        &.selected {
+            border-color: $secleted-color;
+
+            .grid-panel-heading {
+                background-color: $secleted-color;
+            }
+
+            &.complete {
+            border-color: $secleted-done-color;
+
+            .grid-panel-heading {
+                background-color: $secleted-done-color;
+            }
+        }
+        }
+
+        &.archived {
+            border-color: $archived-color;
+
+            .grid-panel-heading {
+                background-color: $archived-color;
+            }
+
+            &.selected {
+                border-color: $archived-selected-color;
+
+                .grid-panel-heading {
+                    background-color: $archived-selected-color;
+                }
+            }
+        }
+
+        .grid-panel-body {
+            padding: 15px;
+        }
+    }
+
+    .clearCompleted {
+        float: right;
+    }
+
+    .todoDone {
+        float: right;
+
+        .status {
+            float: right;
+        }
+
+        .todoCompletedDate {
+            float: left;
+        }
+    }
+}

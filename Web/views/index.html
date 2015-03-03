@@ -1,0 +1,118 @@
+﻿<html>
+<head>
+    <meta charset="utf-8">
+    <title>Todo Training Practical</title>
+
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/todo.min.css" />
+</head>
+<body ng-controller="todoController">
+    <div>
+        <div ng-if="!registered">
+            <form id="userDetails">
+                <input type="text" ng-model="$parent.username" ng-model-instant />
+                <button class="btn btn-primary" ng-click="loginOrRegisterUser($parent.username)">Login / Register</button>
+            </form>
+        </div>
+
+        <div ng-if="registered">
+            <span class="username">username: {{username}}</span>
+            <div class="todoList">
+                <div ng-show="showAddTodo">
+
+                    <div class="task-details input-group">
+                        <span class="input-group-addon" id="basic-addon1">Name</span>
+                        <input " type=" text" class="form-control" ng-model="$parent.formTodoName" ng-model-instant required="true" />
+                    </div>
+
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">Description</span>
+                        <input ng-show="showAddTodo" class="form-control" type="text" ng-model="$parent.formTodoDescription" ng-model-instant />
+                    </div>
+                </div>
+
+                <form class="form-horizontal" id="addTodo">
+                    <button class="btn btn-primary" ng-click="addTodo({name : formTodoName, description:formTodoDescription})" ng-show="showAddTodo">Add Task</button>
+                    <button class="clearCompleted btn btn-primary" ng-click="clearCompleted()">Clear completed</button>
+                    <button class="addTask btn btn-primary" ng-hide="showAddTodo" ng-click="addTask()">Add new todo task</button>
+                    <br />
+                </form>
+
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                        {{viewFilter}}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                        <li role="presentation" ng-repeat="(key, value) in viewingOptions">
+                            <a role="menuitem" tabindex="-1" href="#" ng-click="showTypeSelected(value)">{{value}}</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <br />
+
+                <div ng-repeat="todo in getTodos(viewFilter)">
+
+                    <div class=" grid-panel" ng-class="{archived : todo.is_archived, complete: todo.done && !todo.is_archived, incomplete: !todo.done && !todo.is_selected && !todo.is_archived, selected: todo.is_selected}" ng-click="selectTodo($event,todo)">
+                        <div class="view" ng-hide="todo.is_editable">
+                            <div class="grid-panel-heading">
+                                <span class="grid-panel-title">{{todo.name}}</span>
+                                <a class="todoAction" href="" ng-click="removeTodo(todo)">delete</a>
+                                <span class="todoAction">  |  </span>
+                                <a class="todoAction" href="" ng-click="editTodo($event,todo)">edit</a>
+                                <span ng-if="!todo.is_archived" class="todoAction">  |  </span>
+                                <a ng-if="!todo.is_archived" class="todoaction" href="" ng-click="archiveTodo(todo)">archive</a>
+                            </div>
+                            <div class="grid-panel-body">
+                                <p class="description" ng-show="todo.is_selected">
+                                    {{todo.description}}
+                                </p>
+                                <span class="todoDate">
+                                    {{todo.date_added | date: 'medium'}}
+                                </span>
+
+                                <div class="todoDone checkbox">
+                                    <div class="status">
+                                        <span ng-show="todo.done">{{todo.date_completed | date: 'medium'}} | </span>
+                                        <span> Done</span>
+                                        <label ng-show="todo.done" class="glyphicon glyphicon-ok" aria-hidden="true" ng-click="todoStatusChange(todo, false)"></label>
+                                        <label ng-show="!todo.done" class="glyphicon glyphicon-remove" aria-hidden="true" ng-click="todoStatusChange(todo, true)"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="edit" ng-show="todo.is_editable">
+                            <div class="grid-panel-heading">
+                                <input class="grid-panel-title" type="text" ng-model="todoEdit.name" ng-model-instant " />
+                                <a class="todoAction" href="" ng-click="updateTodo(todo, {name: todoEdit.name, description: todoEdit.description})">Accept</a>
+                                <span class="todoAction">  |  </span>
+                                <a class="todoAction" href="" ng-click="todo.is_editable = false">Cancel</a>
+                            </div>
+                            <div class="grid-panel-body">
+                                <p class="description" ng-show="todo.is_selected">
+                                    <input class="input" type="text" ng-model="todoEdit.description" ng-model-instant />
+                                </p>
+                                <span class="todoDate">
+                                    {{todo.date_added | date: 'medium'}}
+                                </span>
+
+                                <div class="todoDone checkbox">
+                                    <div class="status">
+                                        <span ng-show="todo.done">{{todo.date_completed | date: 'medium'}} | </span>
+                                        <span> Done</span>
+                                        <label ng-show="todo.done" class="glyphicon glyphicon-ok" aria-hidden="true" ng-click="todoStatusChange(todo, false)"></label>
+                                        <label ng-show="!todo.done" class="glyphicon glyphicon-remove" aria-hidden="true" ng-click="todoStatusChange(todo, true)"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script data-main="../js/main" src="../bower_components/requirejs/require.js"></script>
+</body>
+</html>
